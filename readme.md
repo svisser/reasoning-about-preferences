@@ -8,28 +8,28 @@ No efforts were made to turn this academic code into production code.
 README
 ------
 
-1. Create a new GraduationProject in Eclipse.
+* Create a new GraduationProject in Eclipse.
 
-2. Configure the Build Path and add all the .jar files from the /jadex-0.96/lib/ directory.
+* Configure the Build Path and add all the .jar files from the /jadex-0.96/lib/ directory.
 
-3. Add the .java files into the project which results in the following Java modules:
+* Add the .java files into the project which results in the following Java modules:
 
     - bienvenu (implements Bienvenu et al. formulas)
     - goalplanner (implements goal-plan tree logic)
     - holiday (implements the paper holiday agent example)
     - summary (implements the resource/effect summary logic)
 
-4. Create an agent .jar for the Jadex platform by doing:
+* Create an agent .jar for the Jadex platform by doing:
 
     jar cvf agent.jar -C /home/simeon/workspace/GraduationProject/bin . holiday.agent.xml paper.agent.xml
 
-5. Run the Jadex platform using:
+* Run the Jadex platform using:
 
     java -classpath /home/simeon/jadex-0.96/lib/jadex_rt.jar:/home/simeon/jadex-0.96/lib/jadex_standalone.jar jadex.adapter.standalone.Platform
 
-6. See the below for instructions on how to run the agents.
+* See the below for instructions on how to run the agents.
 
-7. After a run you'll see the printed goal-plan tree in the console as well
+* After a run you'll see the printed goal-plan tree in the console as well
 as any properties, consumed resources and successful / unsuccessful plans.
 
 
