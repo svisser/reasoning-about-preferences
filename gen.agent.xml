@@ -1,0 +1,484 @@
+<agent xmlns="http://jadex.sourceforge.net/jadex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jadex.sourceforge.net/jadex http://jadex.sourceforge.net/jadex-0.96.xsd" name="gen" package="gen.agent.xml">
+<imports>
+	<import>jadex.runtime.*</import>
+	<import>goalplanner.*</import>
+	<import>summary.*</import>
+</imports>
+<goals>
+	<achievegoal name="G0"/>
+	<achievegoal name="G1"/>
+	<achievegoal name="G2"/>
+	<achievegoal name="G3"/>
+	<achievegoal name="G4"/>
+	<achievegoal name="G5"/>
+	<achievegoal name="G6"/>
+	<achievegoal name="G7"/>
+	<achievegoal name="G8"/>
+	<achievegoal name="G9"/>
+	<achievegoal name="mastergoal"/>
+	<metagoal name="metagoal">
+		<parameterset name="applicables" class="ICandidateInfo"/>
+		<parameterset name="result" class="ICandidateInfo" direction="out"/>
+		<trigger>
+			<goal ref="G0"/>
+			<goal ref="G1"/>
+			<goal ref="G2"/>
+			<goal ref="G3"/>
+			<goal ref="G4"/>
+			<goal ref="G5"/>
+			<goal ref="G6"/>
+			<goal ref="G7"/>
+			<goal ref="G8"/>
+			<goal ref="G9"/>
+		</trigger>
+	</metagoal>
+</goals>
+<plans>
+	<plan name="masterplan">
+		<parameterset name="preferences" class="String">
+			<value><![CDATA["and(dislike+(E2), dislike+(E4)) (0) >> like+(E2) (25) >> like+(E3) (50)"]]></value>
+			<value><![CDATA["(G1, G2, G3) minimize(energy) (0) >> like(E5) (25)"]]></value>
+			<value><![CDATA["used(G2, money, 200, >) : like(E4) (0)"]]></value>
+			<value><![CDATA["(G2) success(G1) : like(E4) (0)"]]></value>
+		</parameterset>
+		<body class="MasterPlan"/>
+		<trigger>
+			<goal ref="mastergoal"/>
+		</trigger>
+	</plan>
+	<plan name="pingplan">
+		<body class="PingPlanOne"/>
+		<trigger>
+			<messageevent ref="any_message"/>
+		</trigger>
+	</plan>
+	<plan name="metaplan">
+		<parameterset name="applicables" class="ICandidateInfo">
+			<goalmapping ref="metagoal.applicables"/>
+		</parameterset>
+		<parameterset name="result" class="ICandidateInfo" direction="out">
+			<goalmapping ref="metagoal.result"/>
+		</parameterset>
+		<body class="MetaPlan"/>
+		<trigger>
+			<goal ref="metagoal"/>
+		</trigger>
+	</plan>
+	<plan name="P0">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E4"</value>
+		</parameterset>
+		<parameterset name="subgoals" class="String">
+			<value>"G1"</value>
+			<value>"G2"</value>
+			<value>"G3"</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G0"/>
+		</trigger>
+	</plan>
+	<plan name="P1">
+		<parameterset name="effects" class="String">
+			<value>"E3"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="properties" class="Property">
+			<value>new Property("payment", "debit")</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G1"/>
+		</trigger>
+	</plan>
+	<plan name="P2">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G1"/>
+		</trigger>
+	</plan>
+	<plan name="P3">
+		<parameterset name="effects" class="String">
+			<value>"E4"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 502, 0)</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G1"/>
+		</trigger>
+	</plan>
+	<plan name="P4">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G2"/>
+		</trigger>
+	</plan>
+	<plan name="P5">
+		<parameterset name="effects" class="String">
+			<value>"E3"</value>
+			<value>"E4"</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G2"/>
+		</trigger>
+	</plan>
+	<plan name="P6">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+			<value>"E3"</value>
+			<value>"E4"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 141, 0)</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G2"/>
+		</trigger>
+	</plan>
+	<plan name="P7">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E3"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 8, 0)</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G3"/>
+		</trigger>
+	</plan>
+	<plan name="P8">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+			<value>"E4"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("energy", 37, 0)</value>
+			<value>new Triple("money", 425, 0)</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G3"/>
+		</trigger>
+	</plan>
+	<plan name="P9">
+		<parameterset name="effects" class="String">
+			<value>"E2"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 258, 0)</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G3"/>
+		</trigger>
+	</plan>
+	<plan name="P10">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+			<value>"E3"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="subgoals" class="String">
+			<value>"G4"</value>
+			<value>"G5"</value>
+			<value>"G6"</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G0"/>
+		</trigger>
+	</plan>
+	<plan name="P11">
+		<parameterset name="effects" class="String">
+			<value>"E4"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("energy", 13, 0)</value>
+			<value>new Triple("money", 843, 0)</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G4"/>
+		</trigger>
+	</plan>
+	<plan name="P12">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 718, 0)</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G4"/>
+		</trigger>
+	</plan>
+	<plan name="P13">
+		<parameterset name="effects" class="String">
+			<value>"E4"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 183, 0)</value>
+			<value>new Triple("energy", 40, 0)</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G4"/>
+		</trigger>
+	</plan>
+	<plan name="P14">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 734, 0)</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G5"/>
+		</trigger>
+	</plan>
+	<plan name="P15">
+		<parameterset name="effects" class="String">
+			<value>"E2"</value>
+			<value>"E3"</value>
+			<value>"E4"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G5"/>
+		</trigger>
+	</plan>
+	<plan name="P16">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+			<value>"E3"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 43, 0)</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G5"/>
+		</trigger>
+	</plan>
+	<plan name="P17">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+			<value>"E4"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 997, 0)</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G6"/>
+		</trigger>
+	</plan>
+	<plan name="P18">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+			<value>"E4"</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G6"/>
+		</trigger>
+	</plan>
+	<plan name="P19">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G6"/>
+		</trigger>
+	</plan>
+	<plan name="P20">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 645, 0)</value>
+		</parameterset>
+		<parameterset name="subgoals" class="String">
+			<value>"G7"</value>
+			<value>"G8"</value>
+			<value>"G9"</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G0"/>
+		</trigger>
+	</plan>
+	<plan name="P21">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E3"</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G7"/>
+		</trigger>
+	</plan>
+	<plan name="P22">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+			<value>"E3"</value>
+			<value>"E4"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G7"/>
+		</trigger>
+	</plan>
+	<plan name="P23">
+		<parameterset name="effects" class="String">
+			<value>"E3"</value>
+			<value>"E4"</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G7"/>
+		</trigger>
+	</plan>
+	<plan name="P24">
+		<parameterset name="effects" class="String">
+			<value>"E3"</value>
+			<value>"E4"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("energy", 15, 0)</value>
+			<value>new Triple("money", 752, 0)</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G8"/>
+		</trigger>
+	</plan>
+	<plan name="P25">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="properties" class="Property">
+			<value>new Property("secondary_transport", "taxi")</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G8"/>
+		</trigger>
+	</plan>
+	<plan name="P26">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E3"</value>
+			<value>"E4"</value>
+		</parameterset>
+		<parameterset name="properties" class="Property">
+			<value>new Property("secondary_transport", "public_transport")</value>
+			<value>new Property("payment", "credit")</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G8"/>
+		</trigger>
+	</plan>
+	<plan name="P27">
+		<parameterset name="effects" class="String">
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 634, 0)</value>
+		</parameterset>
+		<parameterset name="properties" class="Property">
+			<value>new Property("airline", "british airways")</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G9"/>
+		</trigger>
+	</plan>
+	<plan name="P28">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+			<value>"E3"</value>
+			<value>"E4"</value>
+		</parameterset>
+		<parameterset name="properties" class="Property">
+			<value>new Property("airline", "qantas")</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G9"/>
+		</trigger>
+	</plan>
+	<plan name="P29">
+		<parameterset name="effects" class="String">
+			<value>"E1"</value>
+			<value>"E2"</value>
+			<value>"E4"</value>
+			<value>"E5"</value>
+		</parameterset>
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 644, 0)</value>
+		</parameterset>
+		<parameterset name="properties" class="Property">
+			<value>new Property("airline", "jetstar")</value>
+			<value>new Property("primary_transport", "plane")</value>
+			<value>new Property("payment", "credit")</value>
+		</parameterset>
+		<body class="StandardPlan"/>
+		<trigger>
+			<goal ref="G9"/>
+		</trigger>
+	</plan>
+</plans>
+<events>
+	<messageevent name="any_message" type="fipa" direction="send_receive"/>
+</events>
+<configurations>
+	<configuration name="default">
+	</configuration>
+</configurations>
+</agent>

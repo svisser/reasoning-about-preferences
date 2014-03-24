@@ -1,0 +1,196 @@
+<agent xmlns="http://jadex.sourceforge.net/jadex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jadex.sourceforge.net/jadex http://jadex.sourceforge.net/jadex-0.96.xsd" name="paper" package="paper.agent.xml">
+<imports>
+	<import>jadex.runtime.*</import>
+	<import>goalplanner.*</import>
+	<import>summary.*</import>
+	<import>holiday.*</import>
+</imports>
+<goals>
+	<achievegoal name="HolidayGoal">
+		<parameter name="human_readable_name" class="String">
+			<value>"holiday"</value>
+		</parameter>
+	</achievegoal>
+	<achievegoal name="AccommodationGoal">
+		<parameter name="human_readable_name" class="String">
+			<value>"accommodation"</value>
+		</parameter>
+	</achievegoal>
+	<achievegoal name="BookHotelGoal">
+		<parameter name="human_readable_name" class="String">
+			<value>"book_hotel"</value>
+		</parameter>
+	</achievegoal>
+	<achievegoal name="TransportGoal">
+	<parameter name="human_readable_name" class="String">
+			<value>"transport"</value>
+		</parameter>
+	</achievegoal>
+	<achievegoal name="BookFlightGoal">
+	<parameter name="human_readable_name" class="String">
+			<value>"book_flight"</value>
+		</parameter>
+	</achievegoal>
+	<achievegoal name="mastergoal"/>
+	<metagoal name="metagoal">
+		<parameterset name="applicables" class="ICandidateInfo"/>
+		<parameterset name="result" class="ICandidateInfo" direction="out"/>
+		<trigger>
+			<goal ref="HolidayGoal"/>
+			<goal ref="AccommodationGoal"/>
+			<goal ref="BookHotelGoal"/>
+			<goal ref="TransportGoal"/>
+			<goal ref="BookFlightGoal"/>
+		</trigger>
+	</metagoal>
+</goals>
+<plans>
+	<plan name="masterplan">
+		<parameterset name="preferences" class="String">
+			<value><![CDATA["and(dislike+(E2), dislike+(E4)) (0) >> like+(E2) (25) >> like+(E3) (50)"]]></value>
+		</parameterset>
+		<body class="MasterPlan"/>
+		<trigger>
+			<goal ref="mastergoal"/>
+		</trigger>
+	</plan>
+	<plan name="pingplan">
+		<body class="PingPlanOne"/>
+		<trigger>
+			<messageevent ref="any_message"/>
+		</trigger>
+	</plan>
+	<plan name="metaplan">
+		<parameterset name="applicables" class="ICandidateInfo">
+			<goalmapping ref="metagoal.applicables"/>
+		</parameterset>
+		<parameterset name="result" class="ICandidateInfo" direction="out">
+			<goalmapping ref="metagoal.result"/>
+		</parameterset>
+		<body class="MetaPlan"/>
+		<trigger>
+			<goal ref="metagoal"/>
+		</trigger>
+	</plan>
+	<plan name="HolidayPlan">
+		<parameterset name="subgoals" class="String">
+			<value>"AccommodationGoal"</value>
+			<value>"TransportGoal"</value>
+		</parameterset>
+		<body class="HolidayPlan"/>
+		<trigger>
+			<goal ref="HolidayGoal"/>
+		</trigger>
+	</plan>
+	<plan name="BackpackerPlan">
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 100, 0)</value>
+		</parameterset>
+		<parameterset name="properties" class="Property">
+			<value>new Property("type", "backpacker")</value>
+			<value>new Property("quality", "basic")</value>
+			<value>new Property("payment", new String[] {"debit", "credit"})</value>
+		</parameterset>
+		<body class="BackpackerPlan"/>
+		<trigger>
+			<goal ref="AccommodationGoal"/>
+		</trigger>
+	</plan>
+	<plan name="HotelPlan">
+		<parameterset name="properties" class="Property">
+			<value>new Property("type", "hotel")</value>
+			<value>new Property("payment", "credit")</value>
+		</parameterset>
+		<parameterset name="subgoals" class="String">
+			<value>"BookHotelGoal"</value>
+		</parameterset>
+		<body class="HotelPlan"/>
+		<trigger>
+			<goal ref="AccommodationGoal"/>
+		</trigger>
+	</plan>
+	<plan name="BookThreeStarHotelPlan">
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 200, 0)</value>
+		</parameterset>
+		<parameterset name="properties" class="Property">
+			<value>new Property("quality", "3*")</value>
+		</parameterset>
+		<body class="BookThreeStarHotelPlan"/>
+		<trigger>
+			<goal ref="BookHotelGoal"/>
+		</trigger>
+	</plan>
+	<plan name="BookFiveStarHotelPlan">
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 400, 0)</value>
+		</parameterset>
+		<parameterset name="properties" class="Property">
+			<value>new Property("quality", "5*")</value>
+			<value>new Property("payment", "credit")</value>
+		</parameterset>
+		<body class="BookFiveStarHotelPlan"/>
+		<trigger>
+			<goal ref="BookHotelGoal"/>
+		</trigger>
+	</plan>
+	<plan name="FlightPlan">
+		<parameterset name="properties" class="Property">
+			<value>new Property("type", "plane")</value>
+		</parameterset>
+		<parameterset name="subgoals" class="String">
+			<value>"BookFlightGoal"</value>
+		</parameterset>
+		<body class="FlightPlan"/>
+		<trigger>
+			<goal ref="TransportGoal"/>
+		</trigger>
+	</plan>
+	<plan name="TrainPlan">
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 115, 0)</value>
+		</parameterset>
+		<parameterset name="properties" class="Property">
+			<value>new Property("type", "train")</value>
+			<value>new Property("payment", "debit")</value>
+		</parameterset>
+		<body class="TrainPlan"/>
+		<trigger>
+			<goal ref="TransportGoal"/>
+		</trigger>
+	</plan>
+	<plan name="FlyWithJetstarPlan">
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 90, 0)</value>
+		</parameterset>
+		<parameterset name="properties" class="Property">
+			<value>new Property("payment", "credit")</value>
+			<value>new Property("airline", "jetstar")</value>
+		</parameterset>
+		<body class="FlyWithJetstarPlan"/>
+		<trigger>
+			<goal ref="BookFlightGoal"/>
+		</trigger>
+	</plan>
+	<plan name="FlyWithQantasPlan">
+		<parameterset name="resources" class="Triple">
+			<value>new Triple("money", 150, 0)</value>
+		</parameterset>
+		<parameterset name="properties" class="Property">
+			<value>new Property("payment", "credit")</value>
+			<value>new Property("airline", "qantas")</value>
+		</parameterset>
+		<body class="FlyWithQantasPlan"/>
+		<trigger>
+			<goal ref="BookFlightGoal"/>
+		</trigger>
+	</plan>
+</plans>
+<events>
+	<messageevent name="any_message" type="fipa" direction="send_receive"/>
+</events>
+<configurations>
+	<configuration name="default">
+	</configuration>
+</configurations>
+</agent>
