@@ -1,5 +1,4 @@
-*Note*: this is the implementation of my graduation project which was published
-in the following publications:
+This is the implementation of my graduation project which was published in the following publications:
 
 * Reasoning about preferences in BDI agent systems. Simeon Visser, John Thangarajah, James Harland, AAMAS 2011: 1139-1140
 * Reasoning about Preferences in Intelligent Agent Systems. Simeon Visser, John Thangarajah, James Harland, IJCAI 2011: 426-431
@@ -15,10 +14,10 @@ README
 
 3. Add the .java files into the project which results in the following Java modules:
 
-- bienvenu (implements Bienvenu et al. formulas)
-- goalplanner (implements goal-plan tree logic)
-- holiday (implements the paper holiday agent example)
-- summary (implements the resource/effect summary logic)
+    - bienvenu (implements Bienvenu et al. formulas)
+    - goalplanner (implements goal-plan tree logic)
+    - holiday (implements the paper holiday agent example)
+    - summary (implements the resource/effect summary logic)
 
 4. Create an agent .jar for the Jadex platform by doing:
 
