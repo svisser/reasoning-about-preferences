@@ -1,3 +1,11 @@
+*Note*: this is the implementation of my graduation project which was published
+in the following publications:
+
+* Reasoning about preferences in BDI agent systems. Simeon Visser, John Thangarajah, James Harland, AAMAS 2011: 1139-1140
+* Reasoning about Preferences in Intelligent Agent Systems. Simeon Visser, John Thangarajah, James Harland, IJCAI 2011: 426-431
+
+No efforts were made to turn this academic code into production code.
+
 README
 ------
 
@@ -14,11 +22,11 @@ README
 
 4. Create an agent .jar for the Jadex platform by doing:
 
-jar cvf agent.jar -C /home/simeon/workspace/GraduationProject/bin . holiday.agent.xml paper.agent.xml
+    jar cvf agent.jar -C /home/simeon/workspace/GraduationProject/bin . holiday.agent.xml paper.agent.xml
 
 5. Run the Jadex platform using:
 
-java -classpath /home/simeon/jadex-0.96/lib/jadex_rt.jar:/home/simeon/jadex-0.96/lib/jadex_standalone.jar jadex.adapter.standalone.Platform
+    java -classpath /home/simeon/jadex-0.96/lib/jadex_rt.jar:/home/simeon/jadex-0.96/lib/jadex_standalone.jar jadex.adapter.standalone.Platform
 
 6. See the below for instructions on how to run the agents.
 
@@ -44,7 +52,7 @@ Running
 The files jadex_rt.jar and jadex_standalone.jar need to be included in the
 classpath of Java. The command to run should look something like:
 
-java -classpath H:\jadex-0.96\lib\jadex_rt.jar;H:\jadex-0.96\lib\jadex_standalone.jar jadex.adapter.standalone.Platform
+    java -classpath H:\jadex-0.96\lib\jadex_rt.jar;H:\jadex-0.96\lib\jadex_standalone.jar jadex.adapter.standalone.Platform
 
 In the top-left part of the Jadex window, right-click and select 'Add path'.
 Navigate to the agent.jar file and add that file to the Jadex platform. It is now
@@ -63,7 +71,8 @@ double-click on the agent's name in the list on the left. This puts the agent
 in the list of Receivers on the right. Now, click 'Send' to send any message
 and after this, the agent will start executing.
 
-The command window now shows
+The command window now shows:
+
 - the preference formulas,
 - the annotated goal-plan tree,
 - the plans that have been executed,
@@ -93,7 +102,7 @@ If you modify the code, the Java code needs to be compiled to .class and
 a .jar file needs to be constructed. For this, you can use to following command
 and adapt the paths where needed:
 
-jar cvf agent.jar -C H:\workspace\SummaryAgent096\bin\ . -C H:\workspace\GoalPlanner\bin\ .
+    jar cvf agent.jar -C H:\workspace\SummaryAgent096\bin\ . -C H:\workspace\GoalPlanner\bin\ .
 
 This .jar file should include the code of both the Jadex 0.96 agent and the
 code that constructs and annotates the goal-plan tree. Furthermore, it should include
