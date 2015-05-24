@@ -2,6 +2,7 @@ This is the implementation of my graduation project which was published in the f
 
 * Reasoning about preferences in BDI agent systems. Simeon Visser, John Thangarajah, James Harland, AAMAS 2011: 1139-1140
 * Reasoning about Preferences in Intelligent Agent Systems. Simeon Visser, John Thangarajah, James Harland, IJCAI 2011: 426-431
+* Preference-based reasoning in BDI Agent Systems, Simeon Visser, John Thangarajah, James Harland, Frank Dignum, Journal of Autonomous Agents and Multi-Agent Systems, 2015
 
 No efforts were made to turn this academic code into production code.
 
